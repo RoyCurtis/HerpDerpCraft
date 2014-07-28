@@ -1,6 +1,5 @@
 package roycurtis;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
@@ -9,10 +8,6 @@ import java.util.List;
 
 public class HerpDerpCommand implements ICommand
 {
-    static HerpDerpCommand instance = new HerpDerpCommand();
-
-    Minecraft mc = Minecraft.getMinecraft();
-
     @Override
     public String getCommandName() {
         return "herpderp";
@@ -32,12 +27,12 @@ public class HerpDerpCommand implements ICommand
     public void processCommand(ICommandSender var1, String[] var2)
     {
         HerpDerp.Enabled = !HerpDerp.Enabled;
-        mc.ingameGUI.getChatGUI().printChatMessage( new ChatComponentTranslation("Herp Derp is %s", HerpDerp.Enabled ? "enabled" : "disabled") );
+        HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage( new ChatComponentTranslation("[HerpDerp] %s", HerpDerp.Enabled ? "Enabled!" : "Disabled!") );
     }
 
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender var1) {
-        return false;
+        return true;
     }
 
     @Override
