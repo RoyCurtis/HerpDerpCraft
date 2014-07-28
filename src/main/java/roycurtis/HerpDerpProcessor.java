@@ -10,8 +10,8 @@ import java.util.regex.Pattern;
 
 public class HerpDerpProcessor
 {
-    final Pattern rgxChat  = Pattern.compile("^(?<prefix>(\\[[a-z0-9-_]+\\])?<[a-z0-9-_]+> )(?<msg>.+)$", Pattern.CASE_INSENSITIVE);
-    final Pattern rgxChat2 = Pattern.compile("^(?<prefix>(\\[G(lobal)?\\]) [a-z0-9-_]+: )(?<msg>.+)$", Pattern.CASE_INSENSITIVE);
+    final Pattern rgxChat  = Pattern.compile("^(?<prefix>(\\[[a-z0-9-_]+\\])?<[a-z0-9-_@]+> )(?<msg>.+)$", Pattern.CASE_INSENSITIVE);
+    final Pattern rgxChat2 = Pattern.compile("^(?<prefix>(\\[G(lobal)?\\]) [a-z0-9-_@]+: )(?<msg>.+)$", Pattern.CASE_INSENSITIVE);
     final Pattern rgxWord  = Pattern.compile("(\\S+?)([.!?]+ *|\\s|$)", Pattern.CASE_INSENSITIVE);
 
     final String[] herp = new String[] { "herp", "Herp", "HERP" };

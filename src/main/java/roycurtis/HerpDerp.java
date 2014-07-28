@@ -14,13 +14,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(modid = HerpDerp.MODID, version = HerpDerp.VERSION)
+@Mod(modid = HerpDerp.MODID, version = HerpDerp.VERSION, name = HerpDerp.MODID)
 public class HerpDerp
 {
     // Global mod constants / references
     static final Minecraft MC      = Minecraft.getMinecraft();
     static final String    MODID   = "HerpDerp";
-    static final String    VERSION = "1.0.0";
+    static final String    VERSION = "0.0.1";
     static final Logger    LOGGER  = LogManager.getFormatterLogger(MODID);
     static final Boolean   DEV     = Boolean.parseBoolean( System.getProperty("development", "false") );
 
