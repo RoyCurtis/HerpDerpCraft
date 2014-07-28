@@ -26,8 +26,8 @@ public class HerpDerpCommand implements ICommand
     @Override
     public void processCommand(ICommandSender var1, String[] var2)
     {
-        HerpDerp.Enabled = !HerpDerp.Enabled;
-        HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage( new ChatComponentTranslation("[HerpDerp] %s", HerpDerp.Enabled ? "Enabled!" : "Disabled!") );
+        boolean newState = HerpDerp.Config.ToggleEnabled();
+        HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage( new ChatComponentTranslation("[HerpDerp] %s", newState ? "Enabled!" : "Disabled!") );
     }
 
     @Override

@@ -5,16 +5,18 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
+import java.util.Random;
 
 @Mod(modid = HerpDerp.MODID, version = HerpDerp.VERSION, name = HerpDerp.MODID)
+@SideOnly(Side.CLIENT)
 public class HerpDerp
 {
     // Global mod constants / references
@@ -23,31 +25,25 @@ public class HerpDerp
     static final String    VERSION = "0.0.1";
     static final Logger    LOGGER  = LogManager.getFormatterLogger(MODID);
     static final Boolean   DEV     = Boolean.parseBoolean( System.getProperty("development", "false") );
-
-    // Mod IO
-    static File          BaseDir;
-    static Configuration Config;
+    static final Random    RANDOM  = new Random();
 
     // Mod components
-    static HerpDerpCommand   Command   = new HerpDerpCommand();
-    static HerpDerpProcessor Processor = new HerpDerpProcessor();
-
-    // Settings
-    static Boolean Enabled = false;
+    static HerpDerpCommand   Command;
+    static HerpDerpProcessor Processor;
+    static HerpDerpConfig    Config;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        BaseDir = new File(event.getModConfigurationDirectory(), MODID);
-        Config  = new Configuration( event.getSuggestedConfigurationFile() );
-
-        if ( !BaseDir.exists() )
-            BaseDir.mkdir();
+        Config = new HerpDerpConfig( event.getSuggestedConfigurationFile() );
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+        Command   = new HerpDerpCommand();
+        Processor = new HerpDerpProcessor( Config.Filters );
+
         MinecraftForge.EVENT_BUS.register(Processor);
         FMLCommonHandler.instance().bus().register(Processor);
         ClientCommandHandler.instance.registerCommand(Command);
