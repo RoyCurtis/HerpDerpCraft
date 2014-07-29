@@ -17,16 +17,13 @@ buildscript {
 
 apply plugin: 'forge'
 
-modid   = "HerpDerp"
-version = "1.0"
+version = "1.7.10-0.0.1"
 group   = "roycurtis.HerpDerp"
-
-archivesBaseName = modid
 
 minecraft
 {
-    version = "1.7.2-10.12.2.1121"
-    assetDir = "eclipse/assets"
+    version = "1.7.10-10.13.0.1180"
+    runDir = "eclipse"
 }
 
 jar
@@ -41,7 +38,6 @@ processResources
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
-    inputs.property "modid", project.modid
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs)
@@ -49,7 +45,7 @@ processResources
         include 'mcmod.info'
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version, 'modid':project.modid
+        expand 'version':project.version, 'mcversion':project.minecraft.version
     }
         
     // copy everything else, thats not the mcmod.info

@@ -1,6 +1,6 @@
 [
 {
-  "modid": "${modid}",
+  "modid": "HerpDerp",
   "name": "Herp Derp",
   "description": "Makes server chat easier to deal with.",
   "version": "${version}",
