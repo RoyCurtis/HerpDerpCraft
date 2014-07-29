@@ -12,10 +12,10 @@ import java.util.regex.Pattern;
 public class HerpDerpProcessor
 {
     static final String TOKEN_PLAYER = "(?<player>[A-Za-z0-9-_]+)";
-    static final String TOKEN_FORMAT = "(§[0-9a-fklmnorA-FKLMNOR])*";
+    static final String TOKEN_FORMAT = "(\u00A7[0-9a-fklmnorA-FKLMNOR])*";
 
     static final Pattern REGEX_WORD   = Pattern.compile("(?<word>\\S+?)(?<tail>[,.:;!?]+ *|\\s|$)", Pattern.CASE_INSENSITIVE);
-    static final Pattern REGEX_FORMAT = Pattern.compile("§[0-9a-fklmnor]", Pattern.CASE_INSENSITIVE);
+    static final Pattern REGEX_FORMAT = Pattern.compile("\u00A7[0-9a-fklmnor]", Pattern.CASE_INSENSITIVE);
 
     static final String[] HERPS = new String[] { "herp", "Herp", "HERP" };
     static final String[] DERPS = new String[] { "derp", "Derp", "DERP" };
