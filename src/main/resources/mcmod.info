@@ -1,16 +1,12 @@
 [
 {
-  "modid": "HerpDerp",
-  "name": "Herp Derp",
-  "description": "Makes server chat easier to deal with.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authors": ["Roy Curtis"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
+  "modid":       "HerpDerp",
+  "name":        "HerpDerpCraft",
+  "description": "Herps all the derps in multiplayer chat",
+  "version":     "${version}",
+  "mcversion":   "${mcversion}",
+  "url":         "https://github.com/RoyCurtis/HerpDerpCraft",
+  "authors":     ["Roy Curtis"],
+  "credits":     "Tanner Stokes for the YouTube extension, Jamie Zawinski for the WordPress plugin"
 }
 ]
