@@ -3,16 +3,19 @@ package roycurtis;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Random;
-
+/**
+ * Main class and mod definition of HerpDerpCraft. Holds references to its singleton
+ * instance and management objects. Should only ever be created by Forge.
+ */
 @Mod(
     modid   = HerpDerp.MODID,
     name    = HerpDerp.MODID,
@@ -23,36 +26,44 @@ import java.util.Random;
 )
 public class HerpDerp
 {
-    // Global mod constants / references
-    static final Minecraft MC      = Minecraft.getMinecraft();
-    static final String    MODID   = "HerpDerp";
-    static final String    VERSION = "0.0.1";
-    static final Logger    LOGGER  = LogManager.getFormatterLogger(MODID);
-    static final Boolean   DEV     = Boolean.parseBoolean( System.getProperty("development", "false") );
-    static final Random    RANDOM  = new Random();
+    /** Frozen at 0.0.1 to prevent misleading world save error */
+    static final String VERSION = "0.0.1";
+    static final String MODID   = "HerpDerp";
+    static final Logger LOGGER  = LogManager.getFormatterLogger(MODID);
 
-    // Mod components
-    static HerpDerpCommand   Command;
-    static HerpDerpProcessor Processor;
-    static HerpDerpConfig    Config;
+    /** Singleton instance of HerpDerp, created by Forge */
+    public static HerpDerp  INSTANCE = null;
+    /** Singleton instance of HerpDerp's config */
+    public static Config    CONFIG   = null;
+    /** Shortcut reference to vanilla client instance */
+    public static Minecraft CLIENT   = null;
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    @SideOnly(Side.SERVER)
+    public void serverPreInit(FMLPreInitializationEvent event)
     {
-        Config = new HerpDerpConfig( event.getSuggestedConfigurationFile() );
+        LOGGER.error("This mod is intended only for use on clients");
+        LOGGER.error("Please consider removing this mod from your server");
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event)
+    @SideOnly(Side.CLIENT)
+    public void clientPreInit(FMLPreInitializationEvent event)
     {
-        Command   = new HerpDerpCommand();
-        Processor = new HerpDerpProcessor( Config.Filters );
+        INSTANCE = this;
+        CONFIG   = new Config( event.getSuggestedConfigurationFile() );
+        CLIENT   = Minecraft.getMinecraft();
+    }
 
-        MinecraftForge.EVENT_BUS.register(Processor);
-        FMLCommonHandler.instance().bus().register(Processor);
-        ClientCommandHandler.instance.registerCommand(Command);
-        LOGGER.debug("Registered events");
+    @EventHandler
+    @SideOnly(Side.CLIENT)
+    public void clientInit(FMLInitializationEvent event)
+    {
+        HerpDerpCommand command   = new HerpDerpCommand();
+        ChatListener    processor = new ChatListener();
 
-        LOGGER.info("Loaded version %s", VERSION);
+        MinecraftForge.EVENT_BUS.register(processor);
+        ClientCommandHandler.instance.registerCommand(command);
+        LOGGER.info("[HerpDerp] Loaded version %s", VERSION);
     }
 }
