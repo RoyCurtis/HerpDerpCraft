@@ -15,7 +15,7 @@ import static roycurtis.HerpDerp.CONFIG;
 
 public class ChatListener
 {
-    static final String TOKEN_PLAYER = "(?<player>[A-Za-z0-9-_]+)";
+    static final String TOKEN_PLAYER = "(?<player>[A-Za-z0-9_]+)";
     static final String TOKEN_FORMAT = "(§[0-9a-fklmnorA-FKLMNOR])*";
 
     static final Pattern REGEX_WORD   = Pattern.compile("(?<word>\\S+?)(?<tail>[,.:;!?]+ *|\\s|$)", Pattern.CASE_INSENSITIVE);
