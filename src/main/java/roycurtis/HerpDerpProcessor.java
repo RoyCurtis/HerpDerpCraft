@@ -1,8 +1,8 @@
 package roycurtis;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.FMLNetworkEvent;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 
@@ -40,7 +40,9 @@ public class HerpDerpProcessor
     public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent event)
     {
         if ( HerpDerp.Config.IsEnabled() )
-            HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage( new ChatComponentText("[HerpDerp] Enabled!") );
+            HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage(
+                    new TextComponentString("[HerpDerp] Enabled!")
+            );
     }
 
     @SubscribeEvent
@@ -53,7 +55,7 @@ public class HerpDerpProcessor
         Matcher match = null;
         for (int i = 0; i < filters.length; i++)
         {
-            match = filters[i].matcher( event.message.getFormattedText() );
+            match = filters[i].matcher(event.getMessage().getFormattedText());
 
             if ( match.matches() )
                 break;
@@ -91,8 +93,8 @@ public class HerpDerpProcessor
         if ( StringUtils.isNullOrEmpty( finalMsg.trim() ) )
             finalMsg = herpderp(0);
 
-        HerpDerp.LOGGER.info( "Original message: %s", event.message.getFormattedText() );
-        event.message = new ChatComponentText(prefix + finalMsg);
+        HerpDerp.LOGGER.info( "Original message: %s", event.getMessage().getFormattedText() );
+        event.setMessage( new TextComponentString(prefix + finalMsg) );
     }
 
     public String herpderp(int idx)

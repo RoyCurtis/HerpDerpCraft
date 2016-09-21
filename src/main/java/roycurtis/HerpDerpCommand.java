@@ -1,52 +1,51 @@
 package roycurtis;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 
 import java.util.List;
 
 public class HerpDerpCommand implements ICommand
 {
-    @Override
-    public String getCommandName() {
-        return "herpderp";
+    private final static String NAME = "/herpderp";
+
+    @MethodsReturnNonnullByDefault
+    public String getCommandName() { return NAME; }
+
+    @MethodsReturnNonnullByDefault
+    public String getCommandUsage(ICommandSender iCommandSender)
+    {
+        return "/herpderp - Toggles HerpDerpCraft state";
     }
 
-    @Override
-    public String getCommandUsage(ICommandSender var1) {
-        return "/herpderp";
-    }
+    public List<String> getCommandAliases() { return null; }
 
-    @Override
-    public List getCommandAliases() {
-        return null;
-    }
-
-    @Override
-    public void processCommand(ICommandSender var1, String[] var2)
+    public void execute(MinecraftServer server, ICommandSender who, String[] args)
+    throws CommandException
     {
         boolean newState = HerpDerp.Config.ToggleEnabled();
-        HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage( new ChatComponentTranslation("[HerpDerp] %s", newState ? "Enabled!" : "Disabled!") );
+        HerpDerp.MC.ingameGUI.getChatGUI().printChatMessage(
+                new TextComponentString( "[HerpDerp] " + (newState ? "Enabled!" : "Disabled!") )
+        );
     }
 
-    @Override
-    public boolean canCommandSenderUseCommand(ICommandSender var1) {
-        return true;
-    }
-
-    @Override
-    public List addTabCompletionOptions(ICommandSender var1, String[] var2) {
-        return null;
-    }
-
-    @Override
-    public boolean isUsernameIndex(String[] var1, int var2) {
+    public boolean checkPermission(MinecraftServer server, ICommandSender who)
+    {
         return false;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        return 0;
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender who,
+                                                String[] args, BlockPos pos)
+    {
+        return null;
     }
+
+    public boolean isUsernameIndex(String[] args, int i) { return true; }
+
+    public int compareTo(ICommand o) { return NAME.compareTo( o.getCommandName() ); }
 }

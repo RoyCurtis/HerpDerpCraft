@@ -1,22 +1,26 @@
 package roycurtis;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-@Mod(modid = HerpDerp.MODID, version = HerpDerp.VERSION, name = HerpDerp.MODID)
-@SideOnly(Side.CLIENT)
+@Mod(
+    modid   = HerpDerp.MODID,
+    name    = HerpDerp.MODID,
+    version = HerpDerp.VERSION,
+
+    acceptableRemoteVersions = "*",
+    acceptableSaveVersions   = ""
+)
 public class HerpDerp
 {
     // Global mod constants / references
