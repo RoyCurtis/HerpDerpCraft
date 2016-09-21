@@ -10,7 +10,7 @@ buildscript
         maven
         {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url  = "http://files.minecraftforge.net/maven"
         }
     }
 
@@ -23,33 +23,59 @@ buildscript
 // Apply the ForgeGradle plugin
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-archivesBaseName = "HerpDerp"
-
+// Gradle project properties
 version = "1.10.2-0.0.1"
 group   = "roycurtis.HerpDerp"
 
+// Specifies the output jar file's prefix
+archivesBaseName = "HerpDerp"
+
+// Sets the output directory of the mod's jar file
+jar.destinationDir = file './output'
+
+// Enforces use of Java 1.8 language level
+compileJava
+{
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
+// Minecraft project properties
 minecraft
 {
     version  = "1.10.2-12.18.1.2011"
+    // Specifies the working directory for ForgeGradle run configs
     runDir   = "run"
     // Which MCP decompiled Minecraft symbol mappings to use
     mappings = "snapshot_20160711"
 }
 
+// Fixes issues with Unicode characters in source files
+// From https://discuss.gradle.org/t/special-characters-in-java-string-literals-arent-interpreted-correctly/4665
+tasks.withType(JavaCompile)
+{
+    options.encoding = "UTF-8"
+}
+
 processResources
 {
-    // This will ensure that this task is redone when the versions change
+    inputs.property "modid",     project.archivesBaseName
     inputs.property "version",   project.version
     inputs.property "mcversion", project.minecraft.version
 
-    // Replace metadata in mcmod.info, nothing else
+    // Only replace properties in mcmod.info
     from(sourceSets.main.resources.srcDirs)
     {
         include 'mcmod.info'
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+
+        // Replace version and mcversion
+        expand (
+            'modid':     project.archivesBaseName,
+            'version':   project.version,
+            'mcversion': project.minecraft.version
+        )
     }
-        
-    // Copy everything else, thats not the mcmod.info
+
     from(sourceSets.main.resources.srcDirs)
     {
         exclude 'mcmod.info'
