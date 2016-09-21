@@ -18,8 +18,13 @@ public class ChatListener
     static final String TOKEN_PLAYER = "(?<player>[A-Za-z0-9_]+)";
     static final String TOKEN_FORMAT = "(§[0-9a-fklmnorA-FKLMNOR])*";
 
-    static final Pattern REGEX_WORD   = Pattern.compile("(?<word>\\S+?)(?<tail>[,.:;!?]+ *|\\s|$)", Pattern.CASE_INSENSITIVE);
-    static final Pattern REGEX_FORMAT = Pattern.compile("\u00A7[0-9a-fklmnor]", Pattern.CASE_INSENSITIVE);
+    /** Matches words and any tail characters (e.g. 'creeper!') */
+    static final Pattern REGEX_WORD   = Pattern.compile(
+        "(?<word>\\S+?)(?<tail>[,.:;!?]+ *|\\s|$)", Pattern.CASE_INSENSITIVE);
+
+    /** Matches formatting characters (e.g. '§4' for red) */
+    static final Pattern REGEX_FORMAT = Pattern.compile(
+        "§[0-9a-fklmnor]", Pattern.CASE_INSENSITIVE);
 
     static final String[] HERPS = new String[] { "herp", "Herp", "HERP" };
     static final String[] DERPS = new String[] { "derp", "Derp", "DERP" };
@@ -37,10 +42,10 @@ public class ChatListener
 
         for (int idx = 0; idx < length; idx++)
         {
-            String rawFilter = rawFilters[idx];
+            String rawFilter = rawFilters[idx]
+                .replaceAll("%player%", TOKEN_PLAYER)
+                .replaceAll("%format%", TOKEN_FORMAT);
 
-            rawFilter    = rawFilter.replaceAll("%player%", TOKEN_PLAYER);
-            rawFilter    = rawFilter.replaceAll("%format%", TOKEN_FORMAT);
             filters[idx] = Pattern.compile(rawFilter, Pattern.CASE_INSENSITIVE);
         }
     }
