@@ -1,10 +1,11 @@
 [
 {
-  "modid":       "HerpDerp",
+  "modid":     "${modid}",
+  "version":   "${version}",
+  "mcversion": "${mcversion}",
+
   "name":        "HerpDerpCraft",
   "description": "Herps all the derps in multiplayer chat",
-  "version":     "${version}",
-  "mcversion":   "${mcversion}",
   "url":         "https://github.com/RoyCurtis/HerpDerpCraft",
   "authors":     ["Roy Curtis"],
   "credits":     "Tanner Stokes for the YouTube extension, Jamie Zawinski for the WordPress plugin"
